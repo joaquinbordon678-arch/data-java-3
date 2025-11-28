@@ -1,0 +1,26 @@
+✅ 1. Declarar un array
+int[] numeros;
+
+✅ 2. Crear el array con tamaño fijo
+numeros = new int[5]; // array estático de 5 enteros
+
+✅ 3. Declarar y crear en una sola línea
+int[] numeros = new int[5];
+
+✅ 4. Declarar, crear y asignar valores
+int[] numeros = {10, 20, 30, 40, 50};
+
+🔍 ¿Cómo acceder a los elementos?
+System.out.println(numeros[0]); // primer elemento
+numeros[2] = 99;                // cambiar tercer elemento
+
+🔁 ¿Cómo recorrer un array?
+Con for
+for (int i = 0; i < numeros.length; i++) {
+    System.out.println(numeros[i]);
+}
+
+Con for-each
+for (int n : numeros) {
+    System.out.println(n);
+}
