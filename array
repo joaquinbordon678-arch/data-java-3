@@ -24,3 +24,185 @@ Con for-each
 for (int n : numeros) {
     System.out.println(n);
 }
+
+-----------------------------------------------------------------------------------------------------------------------------
+✅ 1. Cómo pensar una función que pide datos y devuelve un objeto
+Pasos generales
+
+Crear un Scanner.
+
+Pedir los datos al usuario.
+
+Guardarlos en variables.
+
+Si hay varios elementos (ej: materias), crear un array del tamaño indicado.
+
+Rellenar ese array con un for.
+
+Crear el objeto y devolverlo.
+
+Plantilla mental
+public Tipo objetoFuncion() {
+    // 1. Scanner
+    Scanner sc = new Scanner(System.in);
+
+    // 2. Pedir datos simples
+    System.out.print("Ingrese ...: ");
+    tipo dato = sc.nextLine();
+
+    // 3. Pedir datos múltiples
+    Tipo[] arreglo = new Tipo[cantidad];
+    for (int i = 0; i < cantidad; i++) {
+        arreglo[i] = sc.nextLine();
+    }
+
+    // 4. Crear el objeto usando constructor
+    Tipo objeto = new Tipo(dato1, dato2, arreglo);
+
+    // 5. Devolver
+    return objeto;
+}
+
+🧑‍🏫 EJEMPLO aplicado: registrar un docente
+public Docente registrarDocente() {
+    Scanner sc = new Scanner(System.in);
+
+    System.out.print("Nombre: ");
+    String nombre = sc.nextLine();
+
+    System.out.print("Apellido: ");
+    String apellido = sc.nextLine();
+
+    System.out.print("DNI: ");
+    int dni = sc.nextInt();
+    sc.nextLine(); // limpiar buffer
+
+    System.out.print("Cantidad de materias: ");
+    int cant = sc.nextInt();
+    sc.nextLine();
+
+    String[] materias = new String[cant];
+
+    for (int i = 0; i < cant; i++) {
+        System.out.print("Materia " + (i+1) + ": ");
+        materias[i] = sc.nextLine();
+    }
+
+    return new Docente(nombre, apellido, dni, materias);
+}
+
+✅ 2. Funciones que reciben interfaces y verifican tipos
+Patrón típico
+
+Cuando pedís un objeto como parámetro y querés ver si es un docente:
+
+public void mostrarInforme(InformeDeDatos obj) {
+
+    // Mostrar lo que ya define la interfaz
+    System.out.println(obj.generarInforme());
+
+    // Verificar si es Docente
+    if (obj instanceof Docente) {
+        Docente d = (Docente) obj;
+        System.out.println("Materias que dicta:");
+        for (String m : d.getMaterias()) {
+            System.out.println(" - " + m);
+        }
+    }
+}
+
+
+📌 Idea clave:
+instanceof = “¿este objeto es un Docente?”
+
+✅ 3. Mostrar un arreglo sin mostrar posiciones vacías
+Es MUY común ver esto en ejercicios
+public void mostrarEstudiantes(Estudiante[] lista) {
+    for (int i = 0; i < lista.length; i++) {
+        if (lista[i] != null) {   // <--- clave del machete
+            System.out.println(lista[i].generarInforme());
+        }
+    }
+}
+
+
+📌 Clave:
+Los arrays fijos tienen lugares nulos → hay que evitarlos.
+
+✅ 4. Cómo hacer un menú principal REPETITIVO
+Plantilla universal
+public void menu() {
+    Scanner sc = new Scanner(System.in);
+    int opcion;
+
+    do {
+        System.out.println("----- MENU -----");
+        System.out.println("1. Registrar estudiante");
+        System.out.println("2. Registrar docente");
+        System.out.println("3. Mostrar informe");
+        System.out.println("4. Salir");
+        System.out.print("Opcion: ");
+
+        opcion = sc.nextInt();
+        sc.nextLine();
+
+        switch (opcion) {
+            case 1:
+                registrarEstudiante();
+                break;
+            case 2:
+                registrarDocente();
+                break;
+            case 3:
+                mostrarInforme(...);
+                break;
+            case 4:
+                System.out.println("Saliendo...");
+                break;
+            default:
+                System.out.println("Opcion invalida");
+        }
+
+    } while (opcion != 4);
+}
+
+
+📌 Idea clave:
+El menú siempre usa do-while + switch.
+
+🎯 RESUMEN FINAL DEL MACHETE
+🔹 Para registrar objetos
+
+Pedir datos con Scanner
+
+Crear arrays si es necesario
+
+Llenarlos con for
+
+Crear el objeto y devolverlo
+
+🔹 Para mostrar informes de objetos
+
+Recibir la interfaz o clase
+
+Llamar al método de informe
+
+Si es un docente → usar instanceof
+
+🔹 Para arreglos con espacios vacíos
+
+Recorrer con for
+
+Saltar el null
+
+if (arr[i] != null)
+
+🔹 Para menús
+
+do-while
+
+switch
+
+Opciones claras
+
+Repetir hasta que elija salir
